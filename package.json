@@ -7,7 +7,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
-  "author": "Yauhen Kavalchuk",
+  "author": "Alexandr Awdeev",
   "license": "ISC",
   "devDependencies": {
     "prettier": "^2.2.1",

@@ -1,9 +1,21 @@
 import React from "react";
-import Index from "./index.js";
+import Posts from "./index.js";
 
-describe("Index component", () => {
+const setUp = (props) => shallow(<Posts {...props} />);
+
+describe("Posts component", () => {
+  const DEFAULT_PAGE = 10;
+  let component;
+  let instance;
+
+  beforeEach(() => {
+    component = setUp();
+    instance = component.instance();
+    console.log("instance -> ", instance);
+  });
+
   it("should render Index component", function () {
-    const component = shallow(<Index />);
+    const component = shallow(<Posts />);
     expect(component).toMatchSnapshot();
   });
 });

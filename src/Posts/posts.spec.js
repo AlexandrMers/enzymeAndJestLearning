@@ -1,18 +1,22 @@
 import React from "react";
 import Posts from "./index.js";
 
-function simulateChange(input, SEARCH_QUERY_STATE_1) {
-  input.simulate("change", {
+function simulateChange(element, value) {
+  element.simulate("change", {
     target: {
-      value: SEARCH_QUERY_STATE_1,
+      value: value,
     },
   });
 }
 
-function expectValuesWithComponent(component, SEARCH_QUERY_STATE_1) {
-  expect(component.find("input.input").props().value).toEqual(
-    SEARCH_QUERY_STATE_1
-  );
+function simulateKeyPress(element, key) {
+  element.simulate("keyPress", {
+    key,
+  });
+}
+
+function expectValuesWithComponent(element, value) {
+  expect(element.find("input.input").props().value).toEqual(value);
 }
 
 describe("Posts component", () => {
@@ -25,7 +29,7 @@ describe("Posts component", () => {
   it("should render Posts component", function () {
     expect(component).toMatchSnapshot();
   });
-  //
+
   describe("методы компонента Posts", () => {
     describe("метод - handleHitsChange()", () => {
       it("дефолтное состояние hitsPerPage и page", () => {
@@ -67,7 +71,7 @@ describe("Posts component", () => {
         input = component.find("input.input");
       });
 
-      it("изменение состояния searchQuery", () => {
+      it("должно быть корректное изменение состояния searchQuery", () => {
         const SEARCH_QUERY_STATE_0 = "";
         const SEARCH_QUERY_STATE_1 = "Запрос для теста 1";
         const SEARCH_QUERY_STATE_2 = "Запрос для теста 2";
@@ -79,6 +83,19 @@ describe("Posts component", () => {
 
         simulateChange(input, SEARCH_QUERY_STATE_2);
         expectValuesWithComponent(component, SEARCH_QUERY_STATE_2);
+      });
+
+      it("getSearch должен корректно менять состояние page по нажатию на 'Enter'", () => {
+        const RESULT_PAGE_NUMBER_TEXT = `current page - 0`;
+        let resultPage;
+
+        simulateKeyPress(input, "Enter");
+        resultPage = component.find("h2").text();
+        expect(resultPage).toBe(RESULT_PAGE_NUMBER_TEXT);
+
+        simulateKeyPress(input, "Alt");
+        resultPage = component.find("h2").text();
+        expect(resultPage).toBe(RESULT_PAGE_NUMBER_TEXT);
       });
     });
   });

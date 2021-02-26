@@ -9,8 +9,10 @@ import { HITS, NEWS } from "./constants";
 
 const Posts = () => {
   const [searchQuery, changeSearchQuery] = useState("");
+
   const [hitsPerPage, setHitsPerPage] = useState(20);
-  const [page, setPage] = useState(0);
+
+  const [page, setPage] = useState(2);
 
   const handleHitsChange = ({ target: { value } }) => {
     setHitsPerPage(() => +value);
@@ -29,6 +31,7 @@ const Posts = () => {
 
   return (
     <div className="wrapper">
+      <h2>current page - {page}</h2>
       <Title title="Hacker News" />
       <Select
         options={HITS}
